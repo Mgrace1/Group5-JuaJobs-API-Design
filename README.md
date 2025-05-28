@@ -8,7 +8,8 @@ Welcome to the official repository for the **JuaJobs API Design**, a RESTful API
 |  **API Design Document** | Detailed write-up of resources, endpoints, tokens, RBAC, and market-specific design. | [View Document](https://github.com/Mgrace1/Group5-JuaJobs-API-Design/blob/main/JuaJobs%20Assignement.docx) |
 |  **ERD Diagram** | Entity-Relationship diagram showing resource modeling. | [View ERD](https://github.com/Mgrace1/Group5-JuaJobs-API-Design/blob/main/JuaJobsERD.drawio%20(1).png) |
 |  **OpenAPI Spec** | YAML specification of all API endpoints, inputs, and responses. | [View YAML](https://github.com/Mgrace1/Group5-JuaJobs-API-Design/blob/main/openAPI.yaml) |
-|  **Final Presentation Slides** | Slide deck summarizing our design process and decisions. | [View Slides]() |
+|  **Final Presentation Slides** | Slide deck summarizing our design process and decisions. | [View Slides](https://github.com/Mgrace1/Group5-JuaJobs-API-Design/blob/main/Presentation%20-%20API%20Project%20Overview.pdf) |
+|  **Market Adaptation Document** | Document about making the app adapted to it's environment | [View Document](https://github.com/Mgrace1/Group5-JuaJobs-API-Design/blob/main/Market%20Adaptation%20.docx) |
 
 ---
 
