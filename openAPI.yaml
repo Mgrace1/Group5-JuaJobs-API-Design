@@ -1,0 +1,965 @@
+openapi: 3.0.3
+info:
+  title: JuaJobs API
+  description: RESTful API for JuaJobs — a gig platform connecting skilled workers and clients in Africa.
+  version: 1.0.0
+
+servers:
+  - url: https://api.juajobs.com
+
+paths:
+  /users:
+    get:
+      summary: Get all users
+      tags:
+        - Users
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Create a new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/{userId}:
+    get:
+      summary: Get a user by ID
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+    patch:
+      summary: Update a user (partial)
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: User updated successfully
+    delete:
+      summary: Delete a user
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '204':
+          description: User deleted successfully
+  /worker-profiles:
+    get:
+      summary: 'Get all worker profiles'
+      tags:
+        - 'WorkerProfiles'
+      responses:
+        '200':
+          description: 'List of workers'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkerProfile'
+    post:
+      summary: 'Create new worker profile'
+      tags:
+        - 'WorkerProfiles'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkerProfile'
+      responses:
+        '201':
+          description: Worker profile created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerProfile'
+  /worker-profiles/{id}:
+    get:
+      summary: Get a worker profile by ID
+      tags:
+        - WorkerProfiles
+      parameters:
+        - $ref: '#/components/parameters/WorkerProfileId'
+      responses:
+        '200':
+          description: Worker profile found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerProfile'
+        '404':
+          description: Profile not found
+    delete:
+      summary: Delete a worker profile
+      tags:
+        - WorkerProfiles
+      parameters:
+        - $ref: '#/components/parameters/WorkerProfileId'
+      responses:
+        '204':
+          description: Worker profile deleted
+  
+  /users/{userId}/applications:
+    get:
+      summary: Get all applications submitted by a specific user
+      tags:
+        - Applications
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Application'
+
+    post:
+      summary: Create a new application for a user
+      tags:
+        - Applications
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationInput'
+      responses:
+        '201':
+          description: Application created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+
+  /users/{userId}/applications/{applicationId}:
+    get:
+      summary: Get a specific application by ID
+      tags:
+        - Applications
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Application details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+
+    patch:
+      summary: Update fields in an existing application
+      tags:
+        - Applications
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationInput'
+      responses:
+        '200':
+          description: Application updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+
+    delete:
+      summary: Delete a specific application
+      tags:
+        - Applications
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: applicationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Application deleted successfully
+          
+  /users/{userId}/job-postings:
+    get:
+      summary: Get all job postings created by a user
+      tags:
+        - JobPostings
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of job postings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobPosting'
+
+    post:
+      summary: Create a new job posting for a user
+      tags:
+        - JobPostings
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobPostingInput'
+      responses:
+        '201':
+          description: Job posting created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobPosting'
+  /users/{userId}/job-postings/{jobId}:
+    get:
+      summary: Get a specific job posting by ID
+      tags:
+        - JobPostings
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Job posting details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobPosting'
+
+    patch:
+      summary: Update an existing job posting
+      tags:
+        - JobPostings
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobPostingInput'
+      responses:
+        '200':
+          description: Job posting updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobPosting'
+
+    delete:
+      summary: Delete a job posting
+      tags:
+        - JobPostings
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Job posting deleted successfully
+  
+  /skills:
+    get:
+      summary: Get all available skills
+      tags:
+        - Skills
+      responses:
+        '200':
+          description: A list of all skills
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Skill'
+
+    post:
+      summary: Add a new skill to the platform
+      tags:
+        - Skills
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SkillInput'
+      responses:
+        '201':
+          description: Skill created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Skill'
+  
+  /worker-profiles/{workerId}/skills:
+    get:
+      summary: Get all skills for a specific worker
+      tags:
+        - Skills
+      parameters:
+        - name: workerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of skills for the worker
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Skill'
+
+    post:
+      summary: Assign skills to a worker profile
+      tags:
+        - Skills
+      parameters:
+        - name: workerId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string   # Array of skill IDs
+      responses:
+        '200':
+          description: Skills assigned to the worker
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Skill'
+                  
+  /users/{userId}/reviews:
+    post:
+      summary: Submit a review from a user
+      tags:
+        - Reviews
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewInput'
+      responses:
+        '201':
+          description: Review successfully submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+
+    get:
+      summary: Get all reviews written by this user
+      tags:
+        - Reviews
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of reviews authored by user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+
+  /users/{userId}/reviews/received:
+    get:
+      summary: Get all reviews received by this user
+      tags:
+        - Reviews
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of reviews targeting this user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+                  
+  /users/{userId}/PaymentTransactions:
+    post:
+      summary: Create a new payment transaction
+      tags:
+        - PaymentTransactions
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentTransactionInput'
+      responses:
+        '201':
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentTransaction'
+
+    get:
+      summary: Get all transactions involving this user (sent or received)
+      tags:
+        - PaymentTransactions
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentTransaction'
+                  
+  /conversations/{conversationId}/messages:
+    get:
+      summary: Get all messages in a conversation
+      tags:
+        - Conversations
+      parameters:
+        - name: conversationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Message'
+
+    post:
+      summary: Send a message in a conversation
+      tags:
+        - Conversations
+      parameters:
+        - name: conversationId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageInput'
+      responses:
+        '201':
+          description: Message created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+
+components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique ID of the user
+      
+    WorkerProfileId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique ID of the worker profile
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        role:
+          type: string
+          enum: [client, worker, admin]
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    UserInput:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        phone:
+          type: string
+        role:
+          type: string
+          enum: [client, worker]
+          
+    WorkerProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        bio:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        ratings:
+          type: number
+          format: float
+        reviews_count:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+    
+    WorkerProfileInput:
+      type: object
+      required:
+        - user_id
+        - bio
+      properties:
+        user_id:
+          type: string
+        bio:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+    
+    Application:
+      type: object
+      properties:
+        id:
+          type: string
+        worker_id:
+          type: string
+        job_id:
+          type: string
+        cover_letter:
+          type: string
+        applied_at:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [pending, accepted, rejected]
+      required:
+        - id
+        - worker_id
+        - job_id
+        - applied_at
+        - status
+    
+    ApplicationInput:
+      type: object
+      properties:
+        worker_id:
+          type: string
+        job_id:
+          type: string
+        cover_letter:
+          type: string
+        status:
+          type: string
+          enum: [pending, accepted, rejected]
+      required:
+        - worker_id
+        - job_id
+    
+    JobPosting:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        location:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - user_id
+        - title
+        - description
+        - category
+        - location
+        - created_at
+    
+    JobPostingInput:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        location:
+          type: string
+      required:
+        - title
+        - description
+        - category
+        - location
+        
+    Skill:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+
+    SkillInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+        
+    Review:
+      type: object
+      properties:
+        id:
+          type: string
+        author_id:
+          type: string
+        target_id:
+          type: string
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        comment:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - author_id
+        - target_id
+        - rating
+        - created_at
+
+    ReviewInput:
+      type: object
+      properties:
+        target_id:
+          type: string
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        comment:
+          type: string
+      required:
+        - target_id
+        - rating
+        
+    PaymentTransaction:
+      type: object
+      properties:
+        id:
+          type: string
+        sender_id:
+          type: string
+        receiver_id:
+          type: string
+        method:
+          type: string
+          enum: [mobile_money, bank_transfer, card]
+        amount:
+          type: number
+          format: float
+          minimum: 0
+        currency:
+          type: string
+          example: "KES"
+        status:
+          type: string
+          enum: [pending, completed, failed]
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - sender_id
+        - receiver_id
+        - method
+        - amount
+        - currency
+        - status
+        - created_at
+
+    PaymentTransactionInput:
+      type: object
+      properties:
+        receiver_id:
+          type: string
+        method:
+          type: string
+          enum: [mobile_money, bank_transfer, card]
+        amount:
+          type: number
+          format: float
+          minimum: 0
+        currency:
+          type: string
+          example: "KES"
+      required:
+        - receiver_id
+        - method
+        - amount
+        - currency
+        
+    Conversation:
+      type: object
+      properties:
+        id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - created_at
+
+    ConversationParticipant:
+      type: object
+      properties:
+        id:
+          type: string
+        conversation_id:
+          type: string
+        user_id:
+          type: string
+      required:
+        - id
+        - conversation_id
+        - user_id
+
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+        conversation_id:
+          type: string
+        sender_id:
+          type: string
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        read_at:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - id
+        - conversation_id
+        - sender_id
+        - content
+        - created_at
+
+    MessageInput:
+      type: object
+      properties:
+        content:
+          type: string
+      required:
+        - content
