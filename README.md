@@ -5,10 +5,10 @@ Welcome to the official repository for the **JuaJobs API Design**, a RESTful API
 
 | Document | Description | Link |
 |---------|-------------|------|
-|  **API Design Document** | Detailed write-up of resources, endpoints, tokens, RBAC, and market-specific design. | [View PDF](https://github.com/Mgrace1/Group5-JuaJobs-API-Design/blob/main/JuaJobs Assignement.docx) |
-|  **ERD Diagram** | Entity-Relationship diagram showing resource modeling. | [View ERD](https://github.com/Mgrace1/Group5-JuaJobs-API-Design/blob/main/JuaJobsERD.drawio(1).png) |
+|  **API Design Document** | Detailed write-up of resources, endpoints, tokens, RBAC, and market-specific design. | [View Document](https://github.com/Mgrace1/Group5-JuaJobs-API-Design/blob/main/JuaJobs%20Assignement.docx) |
+|  **ERD Diagram** | Entity-Relationship diagram showing resource modeling. | [View ERD](https://github.com/Mgrace1/Group5-JuaJobs-API-Design/blob/main/JuaJobsERD.drawio%20(1).png) |
 |  **OpenAPI Spec** | YAML specification of all API endpoints, inputs, and responses. | [View YAML](https://github.com/Mgrace1/Group5-JuaJobs-API-Design/blob/main/openAPI.yaml) |
-|  **Final Presentation Slides** | Slide deck summarizing our design process and decisions. | [View Slides](docs/Final_Presentation_Slides.pdf) |
+|  **Final Presentation Slides** | Slide deck summarizing our design process and decisions. | [View Slides]() |
 
 ---
 
@@ -16,10 +16,10 @@ Welcome to the official repository for the **JuaJobs API Design**, a RESTful API
 
 | Name             | Role                                         |
 |------------------|----------------------------------------------|
-| Khalid Abdirahman Abdilahi           | Endpoint Designer         |
-| Enzo Batungwanayo      | API Architect              |
+| Khalid Abdirahman Abdilahi           | Endpoint Designer        |
+| Enzo Batungwanayo      | API Architect & Documentation expert             |
 | Grace Munezero     | Security Designer       |
-| Nickitta Umuganwa Asimwe     | Documentation                    |
+| Nickitta Umuganwa Asimwe     | User Experience Analyst & Documentation Expert                |
 
 
 
